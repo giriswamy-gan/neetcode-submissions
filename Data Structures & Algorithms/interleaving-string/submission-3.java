@@ -1,0 +1,28 @@
+class Solution {
+    
+    public boolean isInterleave(String s1, String s2, String s3) {
+        if(s1.length() + s2.length() != s3.length()) return false;
+        return dfs(0, 0, 0, s1, s2, s3);
+    }
+
+    private boolean dfs(int i1, int i2, int i3, String s1, String s2, String s3) {
+        if(i3 == s3.length()) {
+            if(i1 < s1.length() || i2 < s2.length()) return false;
+            else return true;
+        }
+
+        if(i1 < s1.length() && i2 < s2.length() && 
+          s1.charAt(i1) == s2.charAt(i2) && s2.charAt(i2) == s3.charAt(i3)) {
+            return dfs(i1 + 1, i2, i3 + 1, s1, s2, s3) || dfs(i1, i2 + 1, i3 + 1, s1, s2, s3);
+        }
+        else if(i1 < s1.length() && s1.charAt(i1) == s3.charAt(i3)) {
+            return dfs(i1 + 1, i2, i3 + 1, s1, s2, s3);
+        }
+        else if(i2 < s2.length() && s2.charAt(i2) == s3.charAt(i3)) {
+            return dfs(i1, i2 + 1, i3 + 1, s1, s2, s3);
+        }
+        else {
+            return false;
+        }
+    }
+}
